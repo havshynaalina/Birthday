@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        /* --- ЗАСТАВКА --- */
+        .splash {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            background: #2c2f3a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            animation: fadeOut 4s forwards;
+            animation-delay: 3s;
+        }
+
+        .splash-text {
+            color: white;
+            font-size: 26px;
+            opacity: 0;
+            animation: fadeIn 2s forwards, pulse 2s infinite;
+        }
+
+        /* --- ОСНОВА --- */
+        .main {
+            width: 100%;
+            height: 100vh;
+            background: #2c2f3a;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: showMain 1s forwards;
+            animation-delay: 6s;
+        }
+
+        /* --- ФОТО --- */
+        .photo {
+            position: absolute;
+            width: 110px;
+            height: 140px;
+            background: white;
+            padding: 6px;
+            animation: float 4s ease-in-out infinite;
+            transform: rotate(var(--r));
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* позиции */
+        .p1 {
+            top: 5%;
+            left: 5%;
+            --r: -15deg;
+        }
+
+        .p2 {
+            top: 10%;
+            right: 10%;
+            --r: 10deg;
+        }
+
+        .p3 {
+            top: 40%;
+            left: 0%;
+            --r: -10deg;
+        }
+
+        .p4 {
+            bottom: 10%;
+            left: 10%;
+            --r: 15deg;
+        }
+
+        .p5 {
+            bottom: 5%;
+            right: 5%;
+            --r: -10deg;
+        }
+
+        .p6 {
+            top: 30%;
+            right: 0%;
+            --r: 12deg;
+        }
+
+        /* --- КАРТОЧКА --- */
+        .card {
+            width: 75%;
+            background: #9aa9bc;
+            padding: 20px;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .card h1 {
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* кнопка */
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            background: black;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* --- ВТОРАЯ КАРТОЧКА --- */
+        #toggle {
+            display: none;
+        }
+
+        .second {
+            position: absolute;
+            width: 75%;
+            background: #9aa9bc;
+            padding: 20px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: 0.5s;
+        }
+
+        #toggle:checked~.second {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #toggle:checked~.card {
+            opacity: 0;
+        }
+
+        /* --- АНИМАЦИИ --- */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes showMain {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(var(--r));
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(var(--r));
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="splash">
+        <div class="splash-text">С днём рождения, Артур!</div>
+    </div>
+
+    <div class="main">
+
+        <!-- переключатель -->
+        <input type="checkbox" id="toggle">
+
+        <!-- фото -->
+        <div class="photo p1"><img src="img1.jpg"></div>
+        <div class="photo p2"><img src="img2.jpg"></div>
+        <div class="photo p3"><img src="img3.jpg"></div>
+        <div class="photo p4"><img src="img4.jpg"></div>
+        <div class="photo p5"><img src="img5.jpg"></div>
+        <div class="photo p6"><img src="img6.jpg"></div>
+
+        <!-- первая карточка -->
+        <div class="card">
+            <h1>Это не просто сайт</h1>
+            <p>Это маленькое напоминание о том, что самые лучшие моменты — это те, которые мы проживаем вместе.</p>
+            <label for="toggle" class="button">Нажми сюда</label>
+        </div>
+
+        <!-- вторая карточка -->
+        <div class="second">
+            <h1>С днём рождения 🎉</h1>
+            <p>
+                Пусть впереди будет ещё больше моментов,
+                которые захочется сохранить не только в памяти,
+                но и вот так — в маленьких историях.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
