@@ -62,6 +62,7 @@
             padding: 6px;
             animation: float 4s ease-in-out infinite;
             transform: rotate(var(--r));
+            transition: 0.3s;
         }
 
         .photo img {
@@ -107,55 +108,68 @@
             --r: 12deg;
         }
 
-        /* --- КАРТОЧКА --- */
-        .card {
+        /* --- КАРТОЧКИ --- */
+        .card,
+        .second {
             width: 75%;
             background: #9aa9bc;
             padding: 20px;
             z-index: 2;
             text-align: center;
+            position: absolute;
+
+            /* ВАЖНО: теперь адаптивная высота */
+            height: auto;
         }
 
-        .card h1 {
+        .card h1,
+        .second h1 {
             margin-bottom: 15px;
         }
 
-        .card p {
+        .card p,
+        .second p {
             font-size: 14px;
             margin-bottom: 20px;
         }
 
-        /* кнопка */
+        /* скрытие */
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+        }
+
+        /* появление */
+        .visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* плавность */
+        .card,
+        .second {
+            transition: 0.5s;
+        }
+
+        /* кнопки */
         .button {
             display: inline-block;
             padding: 10px 15px;
             background: black;
             color: white;
             text-decoration: none;
+            margin-top: 10px;
+            cursor: pointer;
         }
 
-        /* --- ВТОРАЯ КАРТОЧКА --- */
-        #toggle {
-            display: none;
-        }
-
-        .second {
-            position: absolute;
-            width: 75%;
-            background: #9aa9bc;
-            padding: 20px;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: 0.5s;
-        }
-
-        #toggle:checked~.second {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        #toggle:checked~.card {
-            opacity: 0;
+        /* --- ВИДЕО --- */
+        .video {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 6px;
+            width: 300px;
+            height: 300px;
         }
 
         /* --- АНИМАЦИИ --- */
@@ -214,11 +228,8 @@
 
     <div class="main">
 
-        <!-- переключатель -->
-        <input type="checkbox" id="toggle">
-
         <!-- фото -->
-        <div class="photo p1"><img src="img1.jpg"></div>
+        <div class="photo p1"><img src="1.jpg"></div>
         <div class="photo p2"><img src="img2.jpg"></div>
         <div class="photo p3"><img src="img3.jpg"></div>
         <div class="photo p4"><img src="img4.jpg"></div>
@@ -226,23 +237,67 @@
         <div class="photo p6"><img src="img6.jpg"></div>
 
         <!-- первая карточка -->
-        <div class="card">
-            <h1>Это не просто сайт</h1>
-            <p>Это маленькое напоминание о том, что самые лучшие моменты — это те, которые мы проживаем вместе.</p>
-            <label for="toggle" class="button">Нажми сюда</label>
+        <div class="card visible" id="card1">
+            <h1>Привет, привет!</h1>
+            <h2> Ещё раз поздравляю тебя💐🎁🎉</h2>
+            <pre>
+            
+            Очень жаль, что мы с тобой находимся не рядом и я не могу сказать это лично (а хотелось бы)
+            Ты потрясающий человек и я хочу, чтобы ты это знал.
+            
+            Пускай в этот прекрасный день, а именно 25 апреля, у тебя сбылись все твои мечты и желания❤️
+            
+            Лично хочу пожелать тебе банального щастья и здоровья, ведь оно нужно всегда и всем. 
+            Также желаю успехов в футболе и спорте целом..</pre>
+            <div class="button" onclick="openSecond()">Нажми сюда</div>
         </div>
 
         <!-- вторая карточка -->
-        <div class="second">
-            <h1>С днём рождения 🎉</h1>
-            <p>
-                Пусть впереди будет ещё больше моментов,
-                которые захочется сохранить не только в памяти,
-                но и вот так — в маленьких историях.
-            </p>
+        <div class="second hidden" id="card2">
+            <pre>
+            Сонце в небі наче срака
+            У дворі насрав собака
+            Бобік жучку десь їбе
+            З днем на родження тебе!
+            </pre>
+
+            <!-- ВИДЕО -->
+            <video id="video" class="video" src="video.mp4" muted></video>
+
+            <div class="button" onclick="goBack()">Назад</div>
         </div>
 
     </div>
+
+    <script>
+        const card1 = document.getElementById('card1');
+        const card2 = document.getElementById('card2');
+        const video = document.getElementById('video');
+
+        function openSecond() {
+            card1.classList.remove('visible');
+            card1.classList.add('hidden');
+
+            card2.classList.remove('hidden');
+            card2.classList.add('visible');
+
+            // запуск видео
+            video.currentTime = 0;
+            video.play();
+        }
+
+        function goBack() {
+            card2.classList.remove('visible');
+            card2.classList.add('hidden');
+
+            card1.classList.remove('hidden');
+            card1.classList.add('visible');
+
+            // остановка видео
+            video.pause();
+            video.currentTime = 0;
+        }
+    </script>
 
 </body>
 
